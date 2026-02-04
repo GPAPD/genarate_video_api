@@ -1,0 +1,64 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.log
+*.sqlite3
+
+# =========================
+# Virtual Environment
+# =========================
+venv/
+.env/
+.env.*
+
+# =========================
+# IDE / Editor
+# =========================
+.vscode/
+.idea/
+*.iml
+
+# =========================
+# OS Files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Test / Coverage
+# =========================
+.pytest_cache/
+.coverage
+htmlcov/
+
+# =========================
+# Build / Distribution
+# =========================
+build/
+dist/
+*.egg-info/
+
+# =========================
+# Project Specific
+# =========================
+output/            # Generated videos
+assets/tmp/        # Temporary processing files
+logs/
+
+# =========================
+# FFmpeg / Media temp
+# =========================
+*.mp4
+*.mov
+*.avi
+*.wav
+*.mp3
+
+# =========================
+# Jupyter (if ever used)
+# =========================
+.ipynb_checkpoints/
