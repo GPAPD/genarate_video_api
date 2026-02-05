@@ -46,7 +46,7 @@ dist/
 # Project Specific
 # =========================
 output/            # Generated videos
-assets/tmp/        # Temporary processing files
+#assets/tmp/        # Temporary processing files
 logs/
 
 # =========================
