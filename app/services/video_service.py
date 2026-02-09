@@ -63,6 +63,9 @@ def generate_video (request : VideoRequest):
     text_align="center",
     )
 
+    if request.product_image_count > 6 :
+        request.product_image_count = 6
+
     #set product images
     product_images = []
     for i in range(request.product_image_count):
@@ -75,7 +78,7 @@ def generate_video (request : VideoRequest):
                 )
             )
             .resized(width=700)
-            .with_duration(2)
+            .with_duration(8 - i)
             .with_start(2 + i)
             .with_position((100, "center"))
         )
@@ -84,7 +87,7 @@ def generate_video (request : VideoRequest):
     #hr red line 
     price_hr_redline = (
         ImageClip("./assets/Red-Horizontal-Line.png")
-                    .resized(width=400)
+                    .resized(width= 100 * item_price_text.aspect_ratio )
                     .with_duration(6)
                     .with_start(4)
                     .with_position((1100, 525))
@@ -110,7 +113,7 @@ def generate_video (request : VideoRequest):
         sale_text,
         price_hr_redline
      ]
-    ).write_videofile(f"./gen_videos/{request.product_id}.mp4", fps=10)
+    ).write_videofile(f"./gen_videos/{request.product_id}.mp4", fps=60)
 
 
     print("Render complete!")
