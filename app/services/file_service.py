@@ -15,4 +15,9 @@ def save_file(fileb) :
         with open(file_path, "wb") as buffer:
             shutil.copyfileobj(fileb.file, buffer)
         
-        return {VideoResponse( status_code=200,  message="file save successfully")}
+        return VideoResponse( 
+               status_code=200,     
+               respones=file_path, 
+               message="file save successfully"
+               )
+             

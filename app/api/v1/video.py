@@ -29,7 +29,8 @@ def genarate_videos_using_csv(fileb: Annotated[UploadFile, File()],):
        return respond
 
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"File upload failed: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"File upload failed: {str(e)}"
+)
 
 
 # @router.get(

@@ -12,12 +12,12 @@ def generate_video (request : VideoRequest):
     
     clip_template = VideoFileClip(f"./assets/{get_template(request.template)}")
     font = "./assets/font/static/Montserrat-Bold.ttf"
-    j_name = "4 Carat Diamonds Mediterranean Pendant made in 18 Karat White Gold on nice 18 inch Cable Chain. This pendant includes one Round shape .90ct Center Diamond and 154 Round Shape Diamonds each of .02ct each. Diamond Color is H/I and Clarity is I1/I2. Grades are approximates."
+    #j_name = "4 Carat Diamonds Mediterranean Pendant made in 18 Karat White Gold on nice 18 inch Cable Chain. This pendant includes one Round shape .90ct Center Diamond and 154 Round Shape Diamonds each of .02ct each. Diamond Color is H/I and Clarity is I1/I2. Grades are approximates."
 
     #Item texts 
     item_name_text = TextClip(
         font=font,
-        text=wrap_text(j_name),
+        text=wrap_text(request.product_desc),
         font_size=50,
         interline=10,
         color="#fff",
