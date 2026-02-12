@@ -28,39 +28,39 @@ def generate_video (request : VideoRequest):
     )
 
     item_price_text = TextClip(
-    font=font,
-    text=f"${request.product_price}",
-    font_size=80,
-    color="#fff",
-    text_align="center",
-    margin = (25,25)
+        font=font,
+        text=f"${request.product_price}",
+        font_size=80,
+        color="#fff",
+        text_align="center",
+        margin = (25,25)
     )
 
     retail_text = TextClip(
-    font=font,
-    text="Retail Price",
-    font_size=70,
-    color="#fff",
-    text_align="center",
-    margin = (25,25)
+        font=font,
+        text="Retail Price",
+        font_size=70,
+        color="#fff",
+        text_align="center",
+        margin = (25,25)
     )
 
     sale_text = TextClip(
-    font=font,
-    text="""Sale Price""",
-    font_size=80,
-    color="Red",
-    text_align="center",
-    margin = (25,25)
+        font=font,
+        text="""Sale Price""",
+        font_size=80,
+        color="Red",
+        text_align="center",
+        margin = (25,25)
     )
 
     offer_price_text = TextClip(
-    font=font,
-    text=f"Only ${request.product_sale_price}",
-    margin = (25,25),
-    font_size=90,
-    color="Red",
-    text_align="center",
+        font=font,
+        text=f"Only ${request.product_sale_price}",
+        margin = (25,25),
+        font_size=90,
+        color="Red",
+        text_align="center",
     )
 
     if request.product_image_count > 6 :
@@ -113,7 +113,7 @@ def generate_video (request : VideoRequest):
         sale_text,
         price_hr_redline
      ]
-    ).write_videofile(f"./gen_videos/{request.product_id}.mp4", fps=60)
+    ).write_videofile(f"./gen_videos/{request.product_id}.mp4", fps=20)
 
 
     print("Render complete!")
@@ -184,9 +184,7 @@ def download_image(url, image_name, temp_dir=".assets/temp/"):  # Change this pa
     
     with open(temp_file, 'wb') as f:
         f.write(response.content)
-        ##
-        img = Image.open(f".assets/temp/{image_name}.jpg" ).convert("RGBA")  # Ensure the image has an alpha channel
+        img = Image.open(f".assets/temp/{image_name}.jpg" ).convert("RGBA") 
         # Add border (stroke)
         img_with_border = ImageOps.expand(img, border=20, fill=(29, 38, 107))
-        ##
     return np.array(img_with_border)

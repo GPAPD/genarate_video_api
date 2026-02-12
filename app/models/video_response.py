@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 
 class VideoResponse(BaseModel):
-    status: str  
+    status_code: int
+    respones: object  
     message: str 
