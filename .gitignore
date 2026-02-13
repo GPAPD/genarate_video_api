@@ -18,7 +18,7 @@ venv/
 # =========================
 # IDE / Editor
 # =========================
-.vscode/
+
 .idea/
 *.iml
 
@@ -46,7 +46,6 @@ dist/
 # Project Specific
 # =========================
 output/            # Generated videos
-#assets/tmp/        # Temporary processing files
 logs/
 
 # =========================
@@ -63,3 +62,4 @@ logs/
 # Jupyter (if ever used)
 # =========================
 .ipynb_checkpoints/
+
