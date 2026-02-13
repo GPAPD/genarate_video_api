@@ -5,7 +5,7 @@ from typing import Annotated
 from app.models.video_request import VideoRequest
 from app.models.video_response import VideoResponse
 from app.services.video_service import generate_video
-from app.services.file_service import save_file
+from app.services.file_service import save_file , read_csv_and_generate_video
 
 router = APIRouter(prefix="/video",tags=["Video"])
 
@@ -21,17 +21,26 @@ def generate_video_endpoint(request: VideoRequest, background_tasks: BackgroundT
         raise HTTPException(status_code=500,detail=str(e))
 
 
-@router.post("/generate-all",summary="Generate product videos using csv file")
-def genarate_videos_using_csv(fileb: Annotated[UploadFile, File()],):
+@router.post("/upload_csv",summary="uplad csv file")
+def upload_csv(fileb: Annotated[UploadFile, File()],):
 
     try:
-       respond = save_file(fileb)
-       return respond
+       response = save_file(fileb)
+       return response
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"File upload failed: {str(e)}"
-)
+        )
 
+@router.post("generate_all", summary="Generate product videos using csv file ")
+def generate_videos_using_csv():
+    try :
+        response = read_csv_and_generate_video()
+        return response
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"File upload failed: {str(e)}"
+        )
 
 # @router.get(
 #         "/{product_id}",

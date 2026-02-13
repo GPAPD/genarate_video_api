@@ -8,7 +8,9 @@ import os
 
 from moviepy import *
 
-def generate_video (request : VideoRequest):
+def generate_video (payload : dict):
+
+    request = VideoRequest(**payload)
     
     clip_template = VideoFileClip(f"./assets/{get_template(request.template)}")
     font = "./assets/font/static/Montserrat-Bold.ttf"

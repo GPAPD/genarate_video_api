@@ -12,3 +12,5 @@ video resolution 1920 x 1032
 }
 
 .quantize(Decimal('0.00'))
+
+if windows run (rq worker video_queue --worker-class rq.worker.SimpleWorker) after work added in linux (rq worker video_queue)
