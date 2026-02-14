@@ -14,3 +14,18 @@ video resolution 1920 x 1032
 .quantize(Decimal('0.00'))
 
 if windows - run (rq worker video_queue --worker-class rq.worker.SimpleWorker) or in linux - run (rq worker video_queue)
+
+-----------------------------------------------------------------------------------------
+Python 3.13.1
+
+py -3 -m venv venv
+venv\Scripts\activate
+source venv/bin/activate
+
+pip install moviepy fastapi
+
+
+
+http://127.0.0.1:8000/api/v1/video/generate
+
+uvicorn app.main:app --reload
