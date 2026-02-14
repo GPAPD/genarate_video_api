@@ -117,7 +117,7 @@ def generate_video (payload : dict):
      ]
     ).write_videofile(f"./gen_videos/{request.product_id}.mp4", fps=20)
 
-
+    delete_jpg_files("./assets/temp")
     print("Render complete!")
 
 # templates
@@ -178,15 +178,33 @@ def wrap_text(text: str, max_chars: int = 35, max_lines: int = 3) -> str:
     return "\n".join(lines)
 
 
-def download_image(url, image_name, temp_dir=".assets/temp/"):  # Change this path as needed
-
+def download_image(url, image_name, temp_dir="./assets/temp/"):  # Change this path as needed
+    
     os.makedirs(temp_dir, exist_ok=True) 
     temp_file = os.path.join(temp_dir, image_name+".jpg")
     response = requests.get(url)
     
     with open(temp_file, 'wb') as f:
         f.write(response.content)
-        img = Image.open(f".assets/temp/{image_name}.jpg" ).convert("RGBA") 
+        img = Image.open(f"./assets/temp/{image_name}.jpg" ).convert("RGBA") 
         # Add border (stroke)
         img_with_border = ImageOps.expand(img, border=20, fill=(29, 38, 107))
     return np.array(img_with_border)
+
+import os
+
+def delete_jpg_files(folder_path: str):
+
+    if not os.path.exists(folder_path):
+        print(f"Folder does not exist: {folder_path}")
+        return
+
+    for root, dirs, files in os.walk(folder_path):
+        for file in files:
+            if file.lower().endswith(".jpg"):  # match .jpg or .JPG
+                file_path = os.path.join(root, file)
+                try:
+                    os.remove(file_path)
+                    print(f"Deleted: {file_path}")
+                except Exception as e:
+                    print(f"Failed to delete {file_path}. Reason: {e}")

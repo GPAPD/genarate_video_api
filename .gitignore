@@ -51,7 +51,7 @@ logs/
 # =========================
 # FFmpeg / Media temp
 # =========================
-.assets/temp/*.jpg
+assets/temp/*.jpg
 *.mp4
 *.mov
 *.avi
