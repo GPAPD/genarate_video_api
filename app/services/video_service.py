@@ -119,6 +119,7 @@ def generate_video (payload : dict):
 
     delete_jpg_files("./assets/temp")
     print("Render complete!")
+    return request.product_id
 
 # templates
 def get_template(template):
