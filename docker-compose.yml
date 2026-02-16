@@ -1,0 +1,26 @@
+services:
+
+  api:
+    build: .
+    container_name: fastapi_api
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - redis
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+
+  redis:
+    image: redis:latest
+    container_name: redis_server
+    # DO NOT add 'command' here
+
+  worker:
+    build: .
+    container_name: rq_worker
+    env_file:
+      - .env
+    depends_on:
+      - redis
+    command: rq worker video_queue

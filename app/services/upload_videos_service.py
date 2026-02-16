@@ -13,7 +13,7 @@ def upload_videos_cloudinary(video_url : str, public_id : str):
 
         result = cloudinary.uploader.upload(
             video_url,
-            public_id = f"{os.getenv("SAVE_PATH")}{public_id}",
+            public_id = f"{os.getenv('SAVE_PATH')}{public_id}",
             resource_type="video"
         )
         return result
