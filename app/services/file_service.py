@@ -9,9 +9,10 @@ from app.api.workers.video_worker import generate_video_job
 from app.connection.queue_conn import video_queue
 from app.models.video_request import VideoRequest
 
-UPLOAD_DIR = "uploads"
+UPLOAD_DIR = "./uploads"
 
 def save_file(fileb) :
+    try:
             # Validate CSV
         if not fileb.filename.endswith(".csv"):
             raise HTTPException(status_code=400, detail="Only CSV files allowed")
@@ -27,6 +28,8 @@ def save_file(fileb) :
                respones=file_path, 
                message="file save successfully"
                )
+    except Exception as e:
+        return HTTPException(status_code=500,detail=str(e))
              
 
 def read_csv_and_generate_video():

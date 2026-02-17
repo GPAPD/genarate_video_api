@@ -5,7 +5,7 @@ from app.services.upload_videos_service import upload_videos_cloudinary
 def generate_video_job(payload):
 
     print("Generating video...")
-    time.sleep(10)
+    time.sleep(5)
 
     # call your moviepy video creation here
     product_id = generate_video(payload)
@@ -14,7 +14,8 @@ def generate_video_job(payload):
     upload_to_cloudinary = upload_videos_cloudinary(f"./gen_videos/{product_id}.mp4",product_id)
     #print(upload_to_cloudinary)
 
+    #time.sleep(3)
     #delete after upload
-    #delete_jpg_files(f"./gen_videos/{product_id}.mp4")
+    delete_jpg_files(f"./gen_videos/{product_id}.mp4")
 
     return "completed"
