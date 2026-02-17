@@ -12,9 +12,8 @@ def generate_video_job(payload):
 
     #upload to the cloudinery 
     upload_to_cloudinary = upload_videos_cloudinary(f"./gen_videos/{product_id}.mp4",product_id)
-    #print(upload_to_cloudinary)
 
-    #time.sleep(3)
+    time.sleep(3)
     #delete after upload
     delete_jpg_files(f"./gen_videos/{product_id}.mp4")
 
