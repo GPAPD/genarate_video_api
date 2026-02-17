@@ -7,15 +7,6 @@ services:
       - "80:8000"
     env_file:
       - .env
-    
-    environment:
-      - DATA_ROOT=/data
-
-    volumes:
-        # Format: HOST_PATH : CONTAINER_PATH
-      - ./uploads:/app/uploads
-      - ./gen_videos:/app/gen_videos
-  
 
     depends_on:
       - redis
