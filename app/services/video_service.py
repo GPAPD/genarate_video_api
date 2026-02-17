@@ -51,7 +51,7 @@ def generate_video (payload : dict):
         font=font,
         text="""Sale Price""",
         font_size=80,
-        color="Red",
+        color="#8B0111",
         text_align="center",
         margin = (25,25)
     )
@@ -61,7 +61,7 @@ def generate_video (payload : dict):
         text=f"Only ${request.product_sale_price}",
         margin = (25,25),
         font_size=90,
-        color="Red",
+        color="#8B0111",
         text_align="center",
     )
 
@@ -76,7 +76,8 @@ def generate_video (payload : dict):
             ImageClip(
                 download_image(
                     f"https://media.superjeweler.com/f_auto,fl_lossy,q_auto,c_scale/Images/Products/700x700/pic{request.product_id}-{i}",
-                    f"{request.product_id}-{i}"
+                    f"{request.product_id}-{i}",
+                    template=request.template
                 )
             )
             .resized(width=700)
@@ -126,6 +127,8 @@ def get_template(template):
     match template:
         case 1:
             return  "VideoGenAkash-1.mp4"
+        case 2:
+            return "VideoGenAkash-2.mp4"
         case _:
             return  "VideoGenAkash-1.mp4"
 
@@ -179,7 +182,7 @@ def wrap_text(text: str, max_chars: int = 35, max_lines: int = 3) -> str:
     return "\n".join(lines)
 
 
-def download_image(url, image_name, temp_dir="./assets/temp/"):  # Change this path as needed
+def download_image(url, image_name, temp_dir="./assets/temp/",template = 1):  # Change this path as needed
     
     os.makedirs(temp_dir, exist_ok=True) 
     temp_file = os.path.join(temp_dir, image_name+".jpg")
@@ -189,7 +192,11 @@ def download_image(url, image_name, temp_dir="./assets/temp/"):  # Change this p
         f.write(response.content)
         img = Image.open(f"./assets/temp/{image_name}.jpg" ).convert("RGBA") 
         # Add border (stroke)
-        img_with_border = ImageOps.expand(img, border=20, fill=(29, 38, 107))
+        if template == 1 :
+            img_with_border = ImageOps.expand(img, border=20, fill=(29, 38, 107))
+        else :
+            img_with_border = ImageOps.expand(img, border=20, fill=(255, 191, 0))
+            
     return np.array(img_with_border)
 
 import os

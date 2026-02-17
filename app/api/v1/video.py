@@ -6,6 +6,7 @@ from app.models.video_request import VideoRequest
 from app.models.video_response import VideoResponse
 from app.services.video_service import generate_video
 from app.services.file_service import save_file , read_csv_and_generate_video
+from app.services.upload_videos_service import upload_videos_cloudinary
 
 router = APIRouter(prefix="/video",tags=["Video"])
 
@@ -14,7 +15,8 @@ def generate_video_endpoint(request: VideoRequest, background_tasks: BackgroundT
    
     try:
         # background_tasks.add_task(generate_video, request)
-        generate_video(request)
+        video_id = generate_video(request.model_dump())
+        upload_videos_cloudinary(f"./gen_videos/{video_id}.mp4",video_id)
         return VideoResponse(status_code=200, respones="", message="Video generation started successfully")
 
     except Exception as e:

@@ -42,7 +42,8 @@ def read_csv_and_generate_video():
             product_desc=row["ShortDesc"],
             product_image_count=row["ViewIndex"],
             product_price=row["Retail"],
-            product_sale_price=row["PromoPrice"]
+            product_sale_price=row["PromoPrice"],
+            template=row["template"]
         )
 
         # Convert to dict for Redis serialization safety
