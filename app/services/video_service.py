@@ -215,4 +215,4 @@ def delete_jpg_files(folder_path: str):
                     os.remove(file_path)
                     print(f"Deleted: {file_path}")
                 except Exception as e:
-                    print(f"Failed to delete {file_path}. Reason: {e}")
+                    print(f"Failed to delete ------------- {file_path}. Reason: {e}")

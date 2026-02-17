@@ -10,12 +10,13 @@ def upload_videos_cloudinary(video_url : str, public_id : str):
         api_key = os.getenv("SS_API_KEY"), 
         api_secret = os.getenv("SS_SECRET")
         )
-
+        print("Cloudinery video start uploading--")
         result = cloudinary.uploader.upload(
             video_url,
             public_id = f"{os.getenv('SAVE_PATH')}{public_id}",
             resource_type="video"
         )
+        print("Cloudinery video uploading complete!!")
         return result
     except Exception as e:
         return f"Cloudinery file upload failed: {str(e)}"
