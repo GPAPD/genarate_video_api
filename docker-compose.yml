@@ -8,14 +8,30 @@ services:
     env_file:
       - .env
 
+    volumes:
+      - ./logs:/app/logs
+
+    logging:
+      driver: "local"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
     depends_on:
       - redis
-    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --access-log
+
 
   redis:
     image: redis:latest
     container_name: redis_server
-    # DO NOT add 'command' here
+
+    logging:
+      driver: "local"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
 
   worker:
     build: .
@@ -24,4 +40,14 @@ services:
       - .env
     depends_on:
       - redis
+
+    volumes:
+      - ./logs:/app/logs
+
+    logging:
+      driver: "local"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
     command: rq worker video_queue
