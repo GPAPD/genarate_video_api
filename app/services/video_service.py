@@ -1,7 +1,7 @@
 from app.models.video_request import VideoRequest
 from moviepy import *
 import numpy as np
-import tempfile
+import shutil
 import requests
 from PIL import Image, ImageOps
 import os
@@ -77,6 +77,7 @@ def generate_video (payload : dict):
                 download_image(
                     f"https://media.superjeweler.com/f_auto,fl_lossy,q_auto,c_scale/Images/Products/700x700/pic{request.product_id}-{i}",
                     f"{request.product_id}-{i}",
+                    request.product_id,
                     template=request.template
                 )
             )
@@ -104,8 +105,8 @@ def generate_video (payload : dict):
 
     sale_text = sale_text.with_duration(5).with_start(5).with_position((1000, 650))
     offer_price_text = offer_price_text.with_duration(5).with_start(5).with_position((1000, 750))
-
-    CompositeVideoClip(
+    
+    final=CompositeVideoClip(
     [
         clip_template,
         *product_images,
@@ -116,9 +117,13 @@ def generate_video (payload : dict):
         sale_text,
         price_hr_redline
      ]
-    ).write_videofile(f"./gen_videos/{request.product_id}.mp4", fps=20)
+    ).write_videofile(filename = f"./gen_videos/{request.product_id}.mp4",threads=2, preset="medium", fps=20)
+    #delete_jpg_files(f"./assets/temp/{request.product_id}")
+    delete_folder_completely(f"./assets/temp/{request.product_id}")
 
-    delete_jpg_files("./assets/temp")
+    # final.close()
+    # clip_template.close()
+    
     print("Render complete!")
     return request.product_id
 
@@ -182,15 +187,15 @@ def wrap_text(text: str, max_chars: int = 35, max_lines: int = 3) -> str:
     return "\n".join(lines)
 
 
-def download_image(url, image_name, temp_dir="./assets/temp/",template = 1):  # Change this path as needed
-    
-    os.makedirs(temp_dir, exist_ok=True) 
-    temp_file = os.path.join(temp_dir, image_name+".jpg")
+def download_image(url, image_name,JWL, temp_dir="./assets/temp/",template = 1,):  # Change this path as needed
+    folderpath = temp_dir + JWL + "/"
+    os.makedirs(folderpath, exist_ok=True) 
+    temp_file = os.path.join(folderpath, image_name+".jpg")
     response = requests.get(url)
     
     with open(temp_file, 'wb') as f:
         f.write(response.content)
-        img = Image.open(f"./assets/temp/{image_name}.jpg" ).convert("RGBA") 
+        img = Image.open(f"{folderpath + image_name}.jpg" ).convert("RGBA") 
         # Add border (stroke)
         if template == 1 :
             img_with_border = ImageOps.expand(img, border=20, fill=(29, 38, 107))
@@ -199,7 +204,6 @@ def download_image(url, image_name, temp_dir="./assets/temp/",template = 1):  # 
             
     return np.array(img_with_border)
 
-import os
 
 def delete_jpg_files(folder_path: str):
 
@@ -209,10 +213,20 @@ def delete_jpg_files(folder_path: str):
 
     for root, dirs, files in os.walk(folder_path):
         for file in files:
-            if file.lower().endswith(".jpg"):  # match .jpg or .JPG
                 file_path = os.path.join(root, file)
                 try:
                     os.remove(file_path)
                     print(f"Deleted: {file_path}")
                 except Exception as e:
                     print(f"Failed to delete ------------- {file_path}. Reason: {e}")
+
+
+def delete_folder_completely(folder_path: str):
+    if os.path.exists(folder_path):
+        try:
+            shutil.rmtree(folder_path)
+            print(f"Successfully deleted the folder and all assets: {folder_path}")
+        except Exception as e:
+            print(f"Error: {e}")
+    else:
+        print(f"Folder not found: {folder_path}")

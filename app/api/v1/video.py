@@ -46,12 +46,12 @@ def generate_videos_using_csv():
         )
 
 
-@router.get("/check_worker_queue_is_empty", summary="check_worker_queue_is_empty")
+@router.get("/check_worker_queue_is_empty", summary="check worker queue is empty")
 def check_rq_worker_queue_is_empty():
     return check_queue_is_empty()
 
 
-@router.get("/check_worker_queue_count", summary="check_worker_queue_count")
+@router.get("/check_worker_queue_count", summary="check worke rqueue count")
 def check_rq_worker_queue_count():
     return check_queue_count()
 

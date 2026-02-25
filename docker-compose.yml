@@ -23,8 +23,9 @@ services:
 
 
   redis:
-    image: redis:latest
+    image: redis:7-alpine
     container_name: redis_server
+    restart: always
 
     logging:
       driver: "local"
@@ -35,9 +36,8 @@ services:
 
   worker:
     build: .
-    container_name: rq_worker
     env_file:
-      - .env
+      - .env  
     depends_on:
       - redis
 
