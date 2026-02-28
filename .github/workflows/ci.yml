@@ -1,0 +1,17 @@
+name: CI Day 1
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Run echo command
+      run: echo "CI pipeline is running"
