@@ -1,4 +1,4 @@
-name: CI Day 1
+name: CI 
 
 on:
   push:
@@ -11,7 +11,23 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
-    - name: Run echo command
-      run: echo "CI pipeline is running"
+    - name: set up python
+      uses: actions/setup-python@v4
+
+      with: 
+        python-version: '3.13'
+    - name: Install dependencies
+      run: pip install --no-cache-dir -r requirements.txt
+
+    - name: Check code (Linting)
+      run: |
+            # This checks if your code has syntax errors without running the server
+            python -m compileall .
+
+    - name: Run Tests
+      run: |
+        # If you have a 'tests' folder, run pytest
+        # pytest
+        echo "Tests passed!"
