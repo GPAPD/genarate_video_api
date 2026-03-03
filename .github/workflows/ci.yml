@@ -28,6 +28,5 @@ jobs:
 
     - name: Run Tests
       run: |
-        # If you have a 'tests' folder, run pytest
         # pytest
         echo "Tests passed!"
